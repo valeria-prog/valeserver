@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+ 
+    <title>Bootstrap Theme Simply Me</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">TECNOLOCHICAS</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/calculadora">Mi calculadora</a></li>
+          <li><a href="/google">Google</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <style type="text/css">
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background-image: linear-gradient(to left, rgb(17, 126, 75), #67E792);
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      #calculadora table {
+        border-collapse: collapse;
+      }
+
+      #calculadora table {
+        height: 300px;
+      }
+
+      #calculadora button,
+      #calculadora input {
+        width: 100%;
+        height: 100%;
+        font-size: 1em;
+        padding: 10px;
+      }
+
+      #calculadora input {
+        padding: 15px;
+        color: white;
+        border: none;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      #calculadora input:focus {
+        outline: none;
+      }
+
+      #calculadora button {
+        background-color: rgba(0, 0, 0, 0.4);
+        border: none;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      #calculadora button:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      #calculadora button:focus {
+        outline: none;
+      }
+
+      #calculadora button.operacion {
+        background-color: #9CE1B7;
+      }
+
+      p {
+        text-align: center;
+      }
+
+      .hijo {
+        margin: 0 auto;
+      }
+
+      #calculadora button.operacion#restar,
+      #calculadora button.operacion#igual,
+      #calculadora button.operacion#clear {
+        background-color: rgb(14, 158, 86);
+      }
+    </style>
+
+    <form class="hijo" id="calculadora">
+      <table>
+        <tr>
+          <td colspan="4"><input type="text" readonly id="resultado" /></td>
+        </tr>
+        <tr>
+          <td><button type="button" id="clear" class="operacion">C</button></td>
+          <td>
+            <button type="button" id="dividir" class="operacion">/</button>
+          </td>
+          <td>
+            <button type="button" id="multiplicar" class="operacion">X</button>
+          </td>
+          <td rowspan="2">
+            <button type="button" id="restar" class="operacion">-</button>
+          </td>
+        </tr>
+        <tr>
+          <td><button type="button">1</button></td>
+          <td><button type="button">2</button></td>
+          <td><button type="button">3</button></td>
+        </tr>
+        <tr>
+          <td><button type="button">4</button></td>
+          <td><button type="button">5</button></td>
+          <td><button type="button">6</button></td>
+          <td rowspan="2">
+            <button type="button" id="sumar" class="operacion">+</button>
+          </td>
+        </tr>
+        <tr>
+          <td><button type="button">7</button></td>
+          <td><button type="button">8</button></td>
+          <td><button type="button">9</button></td>
+        </tr>
+        <tr>
+          <td colspan="2"><button type="button">0</button></td>
+          <td colspan="2">
+            <button type="button" id="igual" class="operacion">=</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+
+    <script>
+      console.log("holii calculadora");
+      
+      const calculadora = document.getElementById("calculadora");
+      const resultado = document.getElementById("resultado");
+     
+      calculadora.addEventListener("click", añadirNumeros);
+      
+      let operaciones = [];
+
+      function añadirNumeros(e) {
+        if (e.target.getAttribute("type") === "button") {
+          if (e.target.className != "operacion") {
+            resultado.value += e.target.innerText;
+          }
+          //push para agregar un elemento al final del arreglo
+          if (e.target.id === "sumar") {
+            operaciones.push(resultado.value);
+            operaciones.push("+");
+            calculadora.reset();
+          }
+          //para el boton de igual
+          if (e.target.id === "igual") {
+            operaciones.push(resultado.value);
+            calculadora.reset();
+            
+            const resultadoOperacion = eval(operaciones.join(""));
+            resultado.value = resultadoOperacion;
+            operaciones = [];
+          }
+          if (e.target.id === "restar") {
+            operaciones.push(resultado.value);
+            operaciones.push("-");
+            calculadora.reset();
+          }
+          if (e.target.id === "multiplicar") {
+            operaciones.push(resultado.value);
+            operaciones.push("*");
+            calculadora.reset();
+          }
+          if (e.target.id === "dividir") {
+            operaciones.push(resultado.value);
+            operaciones.push("/");
+            calculadora.reset();
+          }
+          if (e.target.id === "clear") {
+            operaciones = [];
+            calculadora.reset();
+          }
+        }
+      }
+    </script>
+    </body>
+  </html>
+</html>
